@@ -20,7 +20,7 @@ public class App
     private final static int numberOfCrawlers = 7;
     private final static int maxDownloadedSize = 1024 * 1024 * 5;
     private final static String name = "Su Yan";
-    private final static String id = "xxxxxxxx";
+    private final static String id = "2660973269";
     private final static String school = "Marshall";
 
     public static void main(String[] args) throws Exception {
@@ -86,15 +86,10 @@ public class App
             if (info.extension.equals("")) {
                 continue;
             }
-            writer.append(info.hash + info.extension + ",");
+            writer.append(info.hash + ",");
             for (String outgoingUrl : info.outgoingUrls) {
                 // generate outgoing url
-                String[] segment = outgoingUrl.split(".");
-                if (segment.length > 1 && segment[segment.length - 1].length() != 0) {
-                    writer.append(UrlInfo.hashString(outgoingUrl) + "." + segment[segment.length - 1] + ",");
-                } else {
-                    writer.append(UrlInfo.hashString(outgoingUrl) + ".html" + ",");
-                }
+                writer.append(UrlInfo.hashString(outgoingUrl) + ",");
             }
             writer.append("\n");
         }
