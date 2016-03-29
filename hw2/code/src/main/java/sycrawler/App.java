@@ -20,7 +20,7 @@ public class App
     private final static int numberOfCrawlers = 7;
     private final static int maxDownloadedSize = 1024 * 1024 * 5;
     private final static String name = "Su Yan";
-    private final static String id = "2660973269";
+    private final static String id = "xxxxxxxx";
     private final static String school = "Marshall";
 
     public static void main(String[] args) throws Exception {
@@ -80,16 +80,30 @@ public class App
 
     public static void savePageRankCsv(CrawlState sumState) throws Exception {
         String fileName = crawlStorageFolder + "/pagerank.csv";
+        String mapFileName = crawlStorageFolder + "/mapping.csv";
         FileWriter writer = new FileWriter(fileName);
+        FileWriter mapWriter = new FileWriter(mapFileName);
+        String fileId;
 
         for (UrlInfo info : sumState.visitedUrls) {
             if (info.extension.equals("")) {
                 continue;
             }
-            writer.append(info.hash + ",");
+            fileId = App.crawlStorageFolder + "/files/" + info.hash + info.extension;
+            mapWriter.append(fileId + "," + info.url + "\n");
+            writer.append(fileId + ",");
             for (String outgoingUrl : info.outgoingUrls) {
                 // generate outgoing url
-                writer.append(UrlInfo.hashString(outgoingUrl) + ",");
+                String[] segment = outgoingUrl.split(".");
+                if (segment.length > 1 && segment[segment.length - 1].length() != 0) {
+                    fileId = App.crawlStorageFolder + "/files/" + UrlInfo.hashString(outgoingUrl) + "." + segment[segment.length - 1];
+                    mapWriter.append(fileId + "," + outgoingUrl + "\n");
+                    writer.append(fileId + ",");
+                } else {
+                    fileId = App.crawlStorageFolder + "/files/" + UrlInfo.hashString(outgoingUrl) + ".html";
+                    mapWriter.append(fileId + "," + outgoingUrl + "\n");
+                    writer.append(fileId + ",");
+                }
             }
             writer.append("\n");
         }

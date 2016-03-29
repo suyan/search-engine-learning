@@ -8,10 +8,8 @@ import edu.uci.ics.crawler4j.url.WebURL;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Set;
-import java.util.UUID;
 import java.util.regex.Pattern;
 
 public class SyCrawler extends WebCrawler {
@@ -57,9 +55,7 @@ public class SyCrawler extends WebCrawler {
                 HtmlParseData htmlParseData = (HtmlParseData) page.getParseData();
                 Set<WebURL> links = htmlParseData.getOutgoingUrls();
                 for (WebURL link : links) {
-                    try {
-                        outgoingUrls.add(URLEncoder.encode(link.getURL(), "UTF-8"));
-                    } catch (Exception e) {}
+                    outgoingUrls.add(link.getURL());
                 }
                 urlInfo = new UrlInfo(url, page.getContentData().length, outgoingUrls, "text/html", ".html");
                 crawlState.visitedUrls.add(urlInfo);
@@ -82,7 +78,7 @@ public class SyCrawler extends WebCrawler {
         }
 
         if (!urlInfo.extension.equals("")) {
-            String filename = storageFolder.getAbsolutePath() + "/" + urlInfo.hash;
+            String filename = storageFolder.getAbsolutePath() + "/" + urlInfo.hash + urlInfo.extension;
             try {
                 Files.write(page.getContentData(), new File(filename));
             } catch (IOException iox) {
