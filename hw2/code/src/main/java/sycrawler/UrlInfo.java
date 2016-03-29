@@ -34,9 +34,6 @@ public class UrlInfo {
     }
 
     public static String hashString(String s) {
-        try {
-            return URLEncoder.encode(s, "UTF-8");
-        } catch (Exception e) {}
         byte[] hash = null;
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
