@@ -20,3 +20,11 @@ Output file are located in /tmp/sycralwer:
 HW3 is to use solr to index and search the pages fetched in HW2 and compare pagerank algorithms.
 
 We use a Python library named networkx to compute page rank and use PHP to request search result from solr. So in this folder, there are two sub folders name python and PHP.
+
+## Homework 4
+
+Implement spell check and spell correction in search input field. Spell check is implemented by SpellCorrector PHP library(fixed several bugs), spell correction is powered by solr's suggestor(check the solr config file).
+
+
+
+
